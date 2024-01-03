@@ -1,5 +1,6 @@
 package com.company.MeTimesheet.controller;
 
+import com.company.MeTimesheet.repository.StorageRepository;
 import com.company.MeTimesheet.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ public class ImageController {
 
     @Autowired
     private StorageService service;
+
+    private StorageRepository repository;
 
 
     @CrossOrigin(origins = "http://localhost:5173/")
