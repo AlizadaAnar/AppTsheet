@@ -12,11 +12,14 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/image")
+@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
 public class ImageController {
 
     @Autowired
     private StorageService service;
 
+
+    @CrossOrigin(origins = "http://localhost:5173/")
     @PostMapping
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
         String uploadImage = service.uploadImage(file);
@@ -24,6 +27,8 @@ public class ImageController {
                 .body(uploadImage);
     }
 
+
+    @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
         byte[] imageData = service.downloadImage(fileName);
