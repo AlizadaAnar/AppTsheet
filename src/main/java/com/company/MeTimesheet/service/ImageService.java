@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class ImageService {
 
-    @Autowired
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
+
+    public ImageService(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
 
     public List<ImageEntity> getAllImages() {
         return imageRepository.findAll();
