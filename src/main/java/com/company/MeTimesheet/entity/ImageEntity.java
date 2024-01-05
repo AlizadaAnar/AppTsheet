@@ -14,7 +14,7 @@ public class ImageEntity {
     @Column(name = "image_id")
     private Long imageId;
 
-    @Column(name = "image_name")
+    @Column(name = "image_name", nullable = false)
     private String imageName;
 
     @Column(name = "product_quantity")
