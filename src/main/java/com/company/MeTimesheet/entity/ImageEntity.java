@@ -21,7 +21,7 @@ public class ImageEntity {
     private int productQuantity;
 
     @Lob
-    @Column(name = "image_data", length = 1000)
+    @Column(name = "image_data", length = 100000)
     private byte[] imageData;
 
     // Constructors, Getters, and Setters
