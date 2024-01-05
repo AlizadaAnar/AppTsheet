@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/images")
+@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
 public class ImageController {
 
     private final ImageService imageService;
@@ -20,11 +21,13 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping
     public List<ImageEntity> getAllImages() {
         return imageService.getAllImages();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping("/{id}")
     public ResponseEntity<ImageEntity> getImageById(@PathVariable Long id) {
         return imageService.getImageById(id)
@@ -32,6 +35,7 @@ public class ImageController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @PostMapping
     public ResponseEntity<ImageEntity> uploadImage(
             @RequestParam("imageName") String imageName,
@@ -47,6 +51,7 @@ public class ImageController {
         return ResponseEntity.ok(savedImage);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         if (imageService.getImageById(id).isPresent()) {
