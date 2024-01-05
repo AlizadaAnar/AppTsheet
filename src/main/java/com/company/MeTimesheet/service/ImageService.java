@@ -2,7 +2,6 @@ package com.company.MeTimesheet.service;
 
 import com.company.MeTimesheet.entity.ImageEntity;
 import com.company.MeTimesheet.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

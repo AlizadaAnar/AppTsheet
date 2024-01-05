@@ -3,7 +3,6 @@ package com.company.MeTimesheet.controller;
 import com.company.MeTimesheet.entity.ImageEntity;
 import com.company.MeTimesheet.service.ImageService;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api/images")
 public class ImageController {
 
-    @Autowired
-    private ImageService imageService;
+    private final ImageService imageService;
+
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @GetMapping
     public List<ImageEntity> getAllImages() {
