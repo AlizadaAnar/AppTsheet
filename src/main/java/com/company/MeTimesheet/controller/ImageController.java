@@ -35,7 +35,7 @@ public class ImageController {
 
 
     @CrossOrigin(origins = "http://localhost:5173/")
-    @GetMapping("/{fileName}")
+    @GetMapping(value = "/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
         byte[] imageData = service.downloadImage(fileName);
         return ResponseEntity.status(HttpStatus.OK)
