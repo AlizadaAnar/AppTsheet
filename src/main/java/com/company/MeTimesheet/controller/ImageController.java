@@ -2,7 +2,6 @@ package com.company.MeTimesheet.controller;
 
 import com.company.MeTimesheet.repository.StorageRepository;
 import com.company.MeTimesheet.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,12 @@ import java.io.IOException;
 @CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
 public class ImageController {
 
-    @Autowired
-    private StorageService service;
+    private final StorageService service;
+
+    public ImageController(StorageService service) {
+        super();
+        this.service = service;
+    }
 
     private StorageRepository repository;
 
