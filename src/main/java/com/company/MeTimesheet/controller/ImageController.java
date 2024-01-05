@@ -1,46 +1,57 @@
 package com.company.MeTimesheet.controller;
 
-import com.company.MeTimesheet.repository.StorageRepository;
-import com.company.MeTimesheet.service.StorageService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import com.company.MeTimesheet.entity.ImageEntity;
+import com.company.MeTimesheet.service.ImageService;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/image")
-@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
+@RequestMapping("/api/images")
 public class ImageController {
 
-    private final StorageService service;
+    @Autowired
+    private ImageService imageService;
 
-    public ImageController(StorageService service) {
-        super();
-        this.service = service;
+    @GetMapping
+    public List<ImageEntity> getAllImages() {
+        return imageService.getAllImages();
     }
 
-    private StorageRepository repository;
+    @GetMapping("/{id}")
+    public ResponseEntity<ImageEntity> getImageById(@PathVariable Long id) {
+        return imageService.getImageById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-
-    @CrossOrigin(origins = "http://localhost:5173/")
     @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = service.uploadImage(file);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
+    public ResponseEntity<ImageEntity> uploadImage(
+            @RequestParam("imageName") String imageName,
+            @RequestParam("productQuantity") int productQuantity,
+            @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+
+        ImageEntity imageEntity = new ImageEntity();
+        imageEntity.setImageName(imageName);
+        imageEntity.setProductQuantity(productQuantity);
+        imageEntity.setImageData(imageFile.getBytes());
+
+        ImageEntity savedImage = imageService.saveImage(imageEntity);
+        return ResponseEntity.ok(savedImage);
     }
 
-
-    @CrossOrigin(origins = "http://localhost:5173/")
-    @GetMapping(value = "/{fileName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
-        byte[] imageData = service.downloadImage(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/jpeg"))
-                .body(imageData);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+        if (imageService.getImageById(id).isPresent()) {
+            imageService.deleteImage(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 }
