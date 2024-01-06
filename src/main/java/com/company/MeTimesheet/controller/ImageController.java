@@ -18,6 +18,7 @@ public class ImageController {
     private final ImageService imageService;
 
     public ImageController(ImageService imageService) {
+        super();
         this.imageService = imageService;
     }
 
@@ -36,7 +37,7 @@ public class ImageController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173/")
-    @PostMapping
+    @PostMapping("/insert")
     public ResponseEntity<ImageEntity> uploadImage(
             @RequestParam("imageName") String imageName,
             @RequestParam("productQuantity") int productQuantity,
