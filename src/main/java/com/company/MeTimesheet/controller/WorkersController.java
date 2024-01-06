@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "https://management-app-halliburton.vercel.app/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
+@CrossOrigin(origins = "http://localhost:5172/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
 public class WorkersController {
 
     private final WorkersService workersService;
@@ -20,7 +20,7 @@ public class WorkersController {
     }
 
     //Get:  Brings all data
-    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
+    @CrossOrigin(origins = "http://localhost:5172/")
     @GetMapping(value = "/workers", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Workers> listWorkers() {
         return workersService.getAllWorkers();
@@ -28,14 +28,14 @@ public class WorkersController {
 
 
     //Post: Posting a new data
-    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
+    @CrossOrigin(origins = "http://localhost:5172/")
     @PostMapping("/workers")
     public void saveWorkers(@RequestBody Workers workers) {
         workersService.saveWorkers(workers);
     }
 
     //Put: Updates the current data
-    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
+    @CrossOrigin(origins = "http://localhost:5172/")
     @PutMapping("/workers/{wId}")
     public Workers updateWorker(@PathVariable Long wId, @RequestBody Workers workerRequest) {
         return workersService.updateWorkers(wId, workerRequest);
@@ -43,7 +43,7 @@ public class WorkersController {
 
 
     //Get: Get selected data by id
-    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
+    @CrossOrigin(origins = "http://localhost:5172/")
     @GetMapping("/worker/{id}")
     public Workers findWorkerById(@PathVariable long id) {
         return workersService.getWorkersById(id);
@@ -51,7 +51,7 @@ public class WorkersController {
 
 
     //Delete: Deletes a data by id
-    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
+    @CrossOrigin(origins = "http://localhost:5172/")
     @DeleteMapping("/workers/{id}")
     public void DELETE(@PathVariable Long id) {
         workersService.deleteWorkersById(id);
