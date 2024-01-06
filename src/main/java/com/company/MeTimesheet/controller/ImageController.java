@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/images")
-@CrossOrigin(origins = "http://localhost:5173/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
+@CrossOrigin(origins = "https://management-app-halliburton.vercel.app/", allowCredentials = "true", allowedHeaders = {"Authorization", "Content-Type"})
 public class ImageController {
 
     private final ImageService imageService;
@@ -23,14 +23,14 @@ public class ImageController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:5173/")
+    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
     @GetMapping
     public List<ImageEntity> getAllImages() {
         return imageService.getAllImages();
     }
 
 
-    @CrossOrigin(origins = "http://localhost:5173/")
+    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
     @GetMapping("/{id}")
     public ResponseEntity<ImageEntity> getImageById(@PathVariable Long id) {
         return imageService.getImageById(id)
@@ -38,7 +38,7 @@ public class ImageController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @CrossOrigin(origins = "http://localhost:5173/")
+    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
     @PostMapping("/insert")
     public ResponseEntity<ImageEntity> uploadImage(
             @RequestParam("imageName") String imageName,
@@ -54,7 +54,7 @@ public class ImageController {
         return ResponseEntity.ok(savedImage);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173/")
+    @CrossOrigin(origins = "https://management-app-halliburton.vercel.app/")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         if (imageService.getImageById(id).isPresent()) {
