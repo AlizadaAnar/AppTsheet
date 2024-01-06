@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/images")
@@ -27,6 +28,15 @@ public class ImageController {
     public List<ImageEntity> getAllImages() {
         return imageService.getAllImages();
     }
+
+    @GetMapping("/image-urls")
+    public List<String> getImageUrls() {
+        List<ImageEntity> images = imageService.getAllImages();
+        return images.stream()
+                .map(image -> "/api/images/" + image.getImageId() + "/image")
+                .collect(Collectors.toList());
+    }
+
 
     @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping("/{id}")
