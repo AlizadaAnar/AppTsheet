@@ -24,6 +24,9 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+
+    private final String imageDirectory = "/Users/anaralizada/Desktop"; // Replace with the actual path
+
     @GetMapping("/with-links")
     public List<ImageResponse> getAllImagesWithLinks() {
         List<ImageEntity> images = imageService.getAllImages();
@@ -41,19 +44,40 @@ public class ImageController {
         return response;
     }
 
+//    @GetMapping("/{id}/image")
+//    public ResponseEntity<Resource> getImage(@PathVariable Long id) {
+//        ImageEntity imageEntity = imageService.getImageById(id).orElse(null);
+//
+//        if (imageEntity != null) {
+//            Path imagePath = Paths.get(imageDirectory, id + ".jpg");
+//
+//            try {
+//                Resource resource = new UrlResource(imagePath.toUri());
+//                return ResponseEntity.ok()
+//                        .body(resource);
+//            } catch (IOException e) {
+//                e.printStackTrace(); // Handle exception appropriately
+//                return ResponseEntity.notFound().build();
+//            }
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
+
     @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping
     public List<ImageEntity> getAllImages() {
         return imageService.getAllImages();
     }
 
-    @GetMapping("/image-urls")
-    public List<String> getImageUrls() {
-        List<ImageEntity> images = imageService.getAllImages();
-        return images.stream()
-                .map(image -> "/api/images/" + image.getImageId() + "/image")
-                .collect(Collectors.toList());
-    }
+//    @GetMapping("/image-urls")
+//    public List<String> getImageUrls() {
+//        List<ImageEntity> images = imageService.getAllImages();
+//        return images.stream()
+//                .map(image -> "/api/images/" + image.getImageId() + "/image")
+//                .collect(Collectors.toList());
+//    }
 
 
     @CrossOrigin(origins = "http://localhost:5173/")
