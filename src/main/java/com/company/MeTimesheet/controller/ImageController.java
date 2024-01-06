@@ -1,6 +1,7 @@
 package com.company.MeTimesheet.controller;
 
 import com.company.MeTimesheet.entity.ImageEntity;
+import com.company.MeTimesheet.entity.ImageResponse;
 import com.company.MeTimesheet.service.ImageService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,23 @@ public class ImageController {
     public ImageController(ImageService imageService) {
         super();
         this.imageService = imageService;
+    }
+
+    @GetMapping("/with-links")
+    public List<ImageResponse> getAllImagesWithLinks() {
+        List<ImageEntity> images = imageService.getAllImages();
+        return images.stream()
+                .map(this::mapToImageResponse)
+                .collect(Collectors.toList());
+    }
+
+    private ImageResponse mapToImageResponse(ImageEntity imageEntity) {
+        ImageResponse response = new ImageResponse();
+        response.setId(imageEntity.getImageId());
+        response.setImageName(imageEntity.getImageName());
+        response.setProductQuantity(imageEntity.getProductQuantity());
+        response.setImageUrl("/api/images/" + imageEntity.getImageId() + "/image");
+        return response;
     }
 
     @CrossOrigin(origins = "http://localhost:5173/")
